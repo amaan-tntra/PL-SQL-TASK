@@ -1,1 +1,1 @@
-<img src="images/output.png" alt="Output Screenshot" width="500"/>
+<img src="./images/output.png" alt="Output Screenshot"/>
