@@ -28,3 +28,20 @@ INSERT ALL
     INTO Books (book_id, book_name, available_qty) VALUES (119, 'The Lean Startup', 3)
     INTO Books (book_id, book_name, available_qty) VALUES (120, 'Zero to One', 8)
 SELECT * FROM dual;
+
+
+DECLARE
+    p_book_id books.BOOK_ID%TYPE := 101;
+    v_available books.AVAILABLE_QTY%TYPE;
+    
+BEGIN
+    SELECT available_qty INTO v_available 
+    FROM BOOKS 
+    WHERE BOOK_ID = p_book_id;
+    
+    UPDATE BOOKS 
+    SET AVAILABLE_QTY = AVAILABLE_QTY - 1
+    WHERE book_id = p_book_id;
+    DBMS_OUTPUT.PUT_LINE('Book issued successfully. Remaining qty = ' || (v_available - 1));
+END;
+/
