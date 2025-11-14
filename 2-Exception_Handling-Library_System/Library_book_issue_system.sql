@@ -69,5 +69,9 @@ EXCEPTION
     WHEN ZERO_DIVIDE THEN 
         DBMS_OUTPUT.PUT_LINE('Division by zero occurred while calculating fine');
 
+-- If the book ID doesn’t exist
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('Book ID: ' || p_book_id || ' doesn''t exist');
+
 END;
 /
