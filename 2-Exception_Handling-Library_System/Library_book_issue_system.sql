@@ -73,5 +73,10 @@ EXCEPTION
     WHEN NO_DATA_FOUND THEN
         DBMS_OUTPUT.PUT_LINE('Book ID: ' || p_book_id || ' doesn''t exist');
 
+-- Any other unknown error
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Unexpected Error: ' || SQLERRM);
+
+
 END;
 /
