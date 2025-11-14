@@ -47,6 +47,14 @@ BEGIN
         RAISE e_out_of_stock;
     END IF; 
 
+-- Calculating dummy fine
+    DECLARE
+        v_dummy NUMBER;
+    BEGIN
+        v_dummy := 10 / v_available;   
+    END;
+    
+
     UPDATE BOOKS 
     SET AVAILABLE_QTY = AVAILABLE_QTY - 1
     WHERE book_id = p_book_id;
@@ -56,6 +64,10 @@ EXCEPTION
 -- Using RAISE_APPLICATION_ERROR for displaying error message 
     WHEN e_out_of_stock THEN
         RAISE_APPLICATION_ERROR(-20001, 'Sorry, The Book is not available');
+
+-- Simulate a division-by-zero error while calculating dummy fine
+    WHEN ZERO_DIVIDE THEN 
+        DBMS_OUTPUT.PUT_LINE('Division by zero occurred while calculating fine');
 
 END;
 /
