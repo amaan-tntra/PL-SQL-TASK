@@ -33,15 +33,29 @@ SELECT * FROM dual;
 DECLARE
     p_book_id books.BOOK_ID%TYPE := 101;
     v_available books.AVAILABLE_QTY%TYPE;
+
+    e_out_of_stock EXCEPTION;
     
 BEGIN
+
     SELECT available_qty INTO v_available 
     FROM BOOKS 
     WHERE BOOK_ID = p_book_id;
     
+-- Implementing user-defined exception (e_out_of_stock)	
+    IF v_available = 0 THEN
+        RAISE e_out_of_stock;
+    END IF; 
+
     UPDATE BOOKS 
     SET AVAILABLE_QTY = AVAILABLE_QTY - 1
     WHERE book_id = p_book_id;
     DBMS_OUTPUT.PUT_LINE('Book issued successfully. Remaining qty = ' || (v_available - 1));
+
+EXCEPTION
+-- Using RAISE_APPLICATION_ERROR for displaying error message 
+    WHEN e_out_of_stock THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Sorry, The Book is not available');
+
 END;
 /
