@@ -64,6 +64,8 @@ INSERT ALL
     INTO Payroll_Log VALUES (20, 120, 'Salary Recalculated', DATE '2025-01-11')
 SELECT 1 FROM dual;
 
+--------------------------- <<<<< PACKAGE SPEC >>>>>>> -------------------------------------
+
 -- Package PAYROLL_PKG compiled
 CREATE OR REPLACE PACKAGE payroll_pkg AS
 
@@ -76,6 +78,28 @@ CREATE OR REPLACE PACKAGE payroll_pkg AS
     PROCEDURE log_salary_action(p_emp_id IN NUMBER, p_action IN VARCHAR2);
 
     e_emp_not_found EXCEPTION;
+
+END payroll_pkg;
+/
+--------------------------- <<<<< PACKAGE BODY >>>>>>> -------------------------------------
+
+-- Fuction to calculate gross salary
+CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
+
+    FUNCTION calc_gross_salary(p_emp_id IN NUMBER) RETURN NUMBER IS
+        v_basic EMPLOYEES.BASIC_SALARY%TYPE;
+        v_hra EMPLOYEES.HRA%TYPE;
+        v_da EMPLOYEES.DA%TYPE;
+
+    BEGIN
+        SELECT BASIC_SALARY, HRA, DA 
+        INTO v_basic, v_hra, v_da
+        from EMPLOYEES
+        where EMP_ID = p_emp_id;
+
+        RETURN v_basic + v_hra + v_da + company_bonus;
+
+    END calc_gross_salary;
 
 END payroll_pkg;
 /
