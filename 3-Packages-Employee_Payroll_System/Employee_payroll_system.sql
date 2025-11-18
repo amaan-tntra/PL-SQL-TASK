@@ -118,7 +118,27 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
 
     END calc_net_salary;
 
+-- Procedure to update salary components
+    PROCEDURE update_salary(p_emp_id IN NUMBER, p_hra IN NUMBER, p_da IN NUMBER) IS
+    BEGIN
 
+        UPDATE Employees
+        SET hra = p_hra, da  = p_da
+        WHERE emp_id = p_emp_id;
+
+        log_salary_action(p_emp_id, 'Salary Updated');
+    END update_salary;
+
+
+-- Procedure to insert into payroll_log
+    PROCEDURE log_salary_action(p_emp_id IN NUMBER, p_action IN VARCHAR2) IS
+        v_log_id NUMBER;
+    BEGIN
+        SELECT NVL(MAX(log_id),0) + 1 INTO v_log_id FROM Payroll_Log;
+
+        INSERT INTO Payroll_Log(log_id, emp_id, action, log_date)
+        VALUES(v_log_id, p_emp_id, p_action, SYSDATE);
+    END log_salary_action;
 
 
 
