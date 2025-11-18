@@ -64,3 +64,18 @@ INSERT ALL
     INTO Payroll_Log VALUES (20, 120, 'Salary Recalculated', DATE '2025-01-11')
 SELECT 1 FROM dual;
 
+-- Package PAYROLL_PKG compiled
+CREATE OR REPLACE PACKAGE payroll_pkg AS
+
+    company_bonus CONSTANT := 500;
+
+    FUNCTION calc_gross_salary(p_emp_id IN NUMBER) RETURN NUMBER;
+    FUNCTION calc_net_salary(p_emp_id IN NUMBER) RETURN NUMBER;
+
+    PROCEDURE update_salary(p_emp_id IN NUMBER, p_hra IN NUMBER, p_da IN NUMBER);
+    PROCEDURE log_salary_action(p_emp_id IN NUMBER, p_action IN VARCHAR2);
+
+    e_emp_not_found EXCEPTION;
+
+END payroll_pkg;
+/
