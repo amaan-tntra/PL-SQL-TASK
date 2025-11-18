@@ -168,3 +168,35 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
 
 END payroll_pkg;
 /
+
+
+-- Demo Output
+DECLARE
+    v_gross NUMBER;
+    v_net   NUMBER;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('--- Payroll Demo Started ---');
+
+    -- 1. Calculate Gross Salary
+    v_gross := payroll_pkg.calc_gross_salary(101);
+    DBMS_OUTPUT.PUT_LINE('Gross Salary: ' || v_gross);
+
+    -- 2. Calculate Net Salary
+    v_net := payroll_pkg.calc_net_salary(101);
+    DBMS_OUTPUT.PUT_LINE('Net Salary: ' || v_net);
+
+    -- 3. Update Salary Values
+    payroll_pkg.update_salary(101, 8000, 5000);
+    DBMS_OUTPUT.PUT_LINE('Salary Updated Successfully.');
+
+    -- 4. Log Action Manually
+    payroll_pkg.log_salary_action(101, 'Manual log entry');
+    DBMS_OUTPUT.PUT_LINE('Log added.');
+
+EXCEPTION
+    WHEN payroll_pkg.e_emp_not_found THEN
+        DBMS_OUTPUT.PUT_LINE('Employee not found.');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Unexpected Error: ' || SQLERRM);
+END;
+/

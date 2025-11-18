@@ -21,3 +21,7 @@
 ### ❌ Unexpected Error – WHEN OTHERS
 <img src="./images/2-Unexpected_Error.png" alt="Exception output showing unexpected error using WHEN OTHERS">
 
+
+## 3. Packages in PL/SQL – Employee Payroll System
+### Demo Output
+<img src="./images/3-Demo_Output.png" alt="Demo Output Screenshot">
