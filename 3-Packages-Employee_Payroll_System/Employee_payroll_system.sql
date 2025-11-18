@@ -85,6 +85,18 @@ END payroll_pkg;
 
 CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
 
+-- Helper function to check if employee exists
+    FUNCTION emp_exists(p_emp_id NUMBER) RETURN BOOLEAN IS
+        v_count NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO v_count 
+        FROM Employees 
+        WHERE emp_id = p_emp_id;
+
+        RETURN (v_count > 0);
+    END;
+
+
 -- Fuction to calculate gross salary
     FUNCTION calc_gross_salary(p_emp_id IN NUMBER) RETURN NUMBER IS
         v_basic EMPLOYEES.BASIC_SALARY%TYPE;
@@ -92,6 +104,11 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
         v_da EMPLOYEES.DA%TYPE;
 
     BEGIN
+
+        IF NOT emp_exists(p_emp_id) THEN
+            RAISE e_emp_not_found;
+        END IF;
+
         SELECT BASIC_SALARY, HRA, DA 
         INTO v_basic, v_hra, v_da
         from EMPLOYEES
@@ -108,6 +125,10 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
     v_dedeuction EMPLOYEES.DEDUCTIONS%TYPE;
     
     BEGIN
+        
+        IF NOT emp_exists(p_emp_id) THEN
+            RAISE e_emp_not_found;
+        END IF;
 
         v_gross := calc_gross_salary(p_emp_id);
 
@@ -121,6 +142,10 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
 -- Procedure to update salary components
     PROCEDURE update_salary(p_emp_id IN NUMBER, p_hra IN NUMBER, p_da IN NUMBER) IS
     BEGIN
+
+        IF NOT emp_exists(p_emp_id) THEN
+            RAISE e_emp_not_found;
+        END IF;
 
         UPDATE Employees
         SET hra = p_hra, da  = p_da
@@ -139,13 +164,6 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
         INSERT INTO Payroll_Log(log_id, emp_id, action, log_date)
         VALUES(v_log_id, p_emp_id, p_action, SYSDATE);
     END log_salary_action;
-
-
-
-
-
-
-
 
 
 END payroll_pkg;
