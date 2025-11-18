@@ -83,9 +83,9 @@ END payroll_pkg;
 /
 --------------------------- <<<<< PACKAGE BODY >>>>>>> -------------------------------------
 
--- Fuction to calculate gross salary
 CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
 
+-- Fuction to calculate gross salary
     FUNCTION calc_gross_salary(p_emp_id IN NUMBER) RETURN NUMBER IS
         v_basic EMPLOYEES.BASIC_SALARY%TYPE;
         v_hra EMPLOYEES.HRA%TYPE;
@@ -100,6 +100,33 @@ CREATE OR REPLACE PACKAGE BODY payroll_pkg AS
         RETURN v_basic + v_hra + v_da + company_bonus;
 
     END calc_gross_salary;
+
+
+-- Fuction to calculate gross salary
+    FUNCTION calc_net_salary(p_emp_id IN NUMBER) RETURN NUMBER IS
+    v_gross NUMBER;
+    v_dedeuction EMPLOYEES.DEDUCTIONS%TYPE;
+    
+    BEGIN
+
+        v_gross := calc_gross_salary(p_emp_id);
+
+        SELECT DEDUCTIONS INTO v_dedeuction FROM EMPLOYEES
+        WHERE EMP_ID = p_emp_id;
+
+        RETURN v_gross - v_dedeuction;
+
+    END calc_net_salary;
+
+
+
+
+
+
+
+
+
+
 
 END payroll_pkg;
 /
