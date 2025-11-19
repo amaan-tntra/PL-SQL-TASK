@@ -20,3 +20,28 @@ INSERT ALL
   INTO Products (product_id, product_name, quantity, price) VALUES (10, 'External HDD',  20, 4500)
 SELECT * FROM dual;
 
+DECLARE
+
+    TYPE name_map IS TABLE OF VARCHAR2(50) 
+    INDEX BY PLS_INTEGER;
+
+    names name_map;
+
+    idx PLS_INTEGER; 
+    
+BEGIN
+    
+    FOR rec IN (SELECT product_id, product_name FROM PRODUCTS) LOOP
+        names(rec.product_id) := rec.product_name;
+    END LOOP;
+
+    idx := names.FIRST;
+    WHILE idx IS NOT NULL LOOP
+        DBMS_OUTPUT.PUT_LINE('Product id: ' || idx || ' | Name: ' || names(idx));
+        idx := names.NEXT(idx);
+    END LOOP;
+    
+END;
+/
+
+
