@@ -28,3 +28,8 @@
 
 ### Final Output
 <img src="./images/3-Output.png" alt="Output Screenshot">
+
+
+## 4. Collections in PL/SQL - Inventory Management System
+<img src="./images/4-Output.png" alt="Output Screenshot for Inventory Management System">
+
