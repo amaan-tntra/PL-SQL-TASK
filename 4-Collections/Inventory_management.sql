@@ -22,15 +22,21 @@ SELECT * FROM dual;
 
 DECLARE
 
+-- <<<<<<<<<< Associative Array >>>>>>>>> 
     TYPE name_map IS TABLE OF VARCHAR2(50) 
     INDEX BY PLS_INTEGER;
-
     names name_map;
+
+-- <<<<<<<<<< Nested Table >>>>>>>>> 
+    TYPE qty_nt IS TABLE OF NUMBER;
+    quantities qty_nt := qty_nt();
+    total_qty NUMBER := 0;
 
     idx PLS_INTEGER; 
     
 BEGIN
-    
+
+ -- Populate & Print Associative Array 
     FOR rec IN (SELECT product_id, product_name FROM PRODUCTS) LOOP
         names(rec.product_id) := rec.product_name;
     END LOOP;
@@ -40,7 +46,19 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Product id: ' || idx || ' | Name: ' || names(idx));
         idx := names.NEXT(idx);
     END LOOP;
-    
+
+-- Populate Nested Table & Calculate total quantity
+    SELECT quantity BULK COLLECT INTO quantities
+    FROM Products
+    ORDER BY product_id;
+
+     FOR i IN 1 .. quantities.COUNT LOOP
+        total_qty := total_qty + NVL(quantities(i), 0);
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('Total Quantity in Inventory: ' || total_qty);
+
+
 END;
 /
 
