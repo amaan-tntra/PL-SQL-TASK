@@ -58,6 +58,17 @@ BEGIN
 
     DBMS_OUTPUT.PUT_LINE('Total Quantity in Inventory: ' || total_qty);
 
+-- collection methods
+    DBMS_OUTPUT.PUT_LINE('Nested Table Count: ' || quantities.COUNT);
+
+    quantities.EXTEND;
+    quantities(quantities.COUNT) := 99;
+    DBMS_OUTPUT.PUT_LINE('After EXTEND, New Count: ' || quantities.COUNT);
+
+    quantities.DELETE(1);
+    DBMS_OUTPUT.PUT_LINE('After DELETE(1), Count remains: ' || quantities.COUNT);
+
+
 
 END;
 /
