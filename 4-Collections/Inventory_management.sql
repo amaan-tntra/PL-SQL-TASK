@@ -41,7 +41,12 @@ DECLARE
 
 BEGIN
 
+    DBMS_OUTPUT.PUT_LINE('===============================');
+    DBMS_OUTPUT.PUT_LINE('  INVENTORY MANAGEMENT SYSTEM  ');
+    DBMS_OUTPUT.PUT_LINE('===============================');
+
  -- Populate & Print Associative Array 
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '---- Associative Array  ----');
     FOR rec IN (SELECT product_id, product_name FROM PRODUCTS) LOOP
         names(rec.product_id) := rec.product_name;
     END LOOP;
@@ -53,6 +58,7 @@ BEGIN
     END LOOP;
 
 -- Populate Nested Table & Calculate total quantity
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '---- Nested Table  ----');
     SELECT quantity BULK COLLECT INTO quantities
     FROM Products
     ORDER BY product_id;
@@ -64,7 +70,9 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Total Quantity in Inventory: ' || total_qty);
 
 -- collection methods
-    DBMS_OUTPUT.PUT_LINE('Nested Table Count: ' || quantities.COUNT);
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '---- Collection Methods  ----');
+    
+    DBMS_OUTPUT.PUT_LINE('Initial Count: ' || quantities.COUNT);
 
     quantities.EXTEND;
     quantities(quantities.COUNT) := 99;
@@ -74,6 +82,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('After DELETE(1), Count remains: ' || quantities.COUNT);
 
 -- VARRAY of 5 product names
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '---- VARRAY of 5 Product Names ----');
     v_products.EXTEND(5);
     v_products(1) := 'Laptop';
     v_products(2) := 'Keyboard';
@@ -86,6 +95,7 @@ BEGIN
     END LOOP;
 
 -- Combine collections: Print products with quantity < 10
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || '---- Products with Quantity < 10 ----');
     DECLARE
         TYPE id_nt IS TABLE OF NUMBER;
         ids id_nt := id_nt();
