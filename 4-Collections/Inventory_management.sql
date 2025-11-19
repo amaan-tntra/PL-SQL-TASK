@@ -33,7 +33,12 @@ DECLARE
     total_qty NUMBER := 0;
 
     idx PLS_INTEGER; 
-    
+
+-- <<<<<<<<<< VARRRAY >>>>>>>>> 
+    TYPE product_varray_t IS VARRAY(5) OF VARCHAR2(50);
+    v_products product_varray_t := product_varray_t();
+
+
 BEGIN
 
  -- Populate & Print Associative Array 
@@ -67,6 +72,18 @@ BEGIN
 
     quantities.DELETE(1);
     DBMS_OUTPUT.PUT_LINE('After DELETE(1), Count remains: ' || quantities.COUNT);
+
+-- VARRAY of 5 product names
+    v_products.EXTEND(5);
+    v_products(1) := 'Laptop';
+    v_products(2) := 'Keyboard';
+    v_products(3) := 'Printer';
+    v_products(4) := 'Monitor';
+    v_products(5) := 'Webcam';
+
+     FOR i IN 1 .. v_products.COUNT LOOP
+        DBMS_OUTPUT.PUT_LINE('VARRAY[' || i || ']: ' || v_products(i));
+    END LOOP;
 
 
 
