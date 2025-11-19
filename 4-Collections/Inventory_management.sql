@@ -85,7 +85,27 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('VARRAY[' || i || ']: ' || v_products(i));
     END LOOP;
 
-
+-- Combine collections: Print products with quantity < 10
+    DECLARE
+        TYPE id_nt IS TABLE OF NUMBER;
+        ids id_nt := id_nt();
+        qtys qty_nt := qty_nt();
+   
+    BEGIN
+        SELECT product_id, quantity BULK COLLECT INTO ids, qtys
+        FROM Products
+        ORDER BY product_id;
+        
+        FOR i IN 1 .. ids.COUNT LOOP
+            IF qtys(i) < 10 THEN
+                DBMS_OUTPUT.PUT_LINE(
+                    'Product ID: ' || ids(i) ||
+                    ' | Name: ' || names(ids(i)) ||
+                    ' | Quantity: ' || qtys(i)
+                );
+            END IF;
+        END LOOP;
+    END;
 
 END;
 /
