@@ -50,6 +50,10 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Supplier Name: ' || sup_rec.SUPPLIER_NAME || ' | Contact: ' || sup_rec.Contact);
 
 
+--  Iterate through all products and print their name, quantity, and price
+    FOR p in (SELECT * FROM PRODUCTS) LOOP
+        DBMS_OUTPUT.PUT_LINE('Product Name: ' || p.product_name || ' | Qauntity: ' || p.quantity || ' | Price: ' || p.Price);
+    END LOOP;
 
 END;
 /
