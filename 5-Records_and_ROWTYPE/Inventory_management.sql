@@ -38,25 +38,29 @@ BEGIN
     FROM PRODUCTS
     WHERE PRODUCT_ID = 1; 
     
+    DBMS_OUTPUT.PUT_LINE('--- Product Details ---');
     DBMS_OUTPUT.PUT_LINE('Product Name: ' || prod_rec.product_name || ' | Qauntity: ' || prod_rec.quantity ||
                         ' | Price: ' || prod_rec.Price);
-
+    DBMS_OUTPUT.PUT_LINE(' ');
 
 -- Fetch and print details of supplier with SUPPLIER_ID = 1
     SELECT * INTO sup_rec 
     FROM SUPPLIERS
     WHERE SUPPLIER_ID = 1;
 
+    DBMS_OUTPUT.PUT_LINE('--- Supplier Details ---');
     DBMS_OUTPUT.PUT_LINE('Supplier Name: ' || sup_rec.SUPPLIER_NAME || ' | Contact: ' || sup_rec.Contact);
-
+    DBMS_OUTPUT.PUT_LINE(' ');
 
 --  Iterate through all products and print their name, quantity, and price
+    DBMS_OUTPUT.PUT_LINE('--- All Products ---');
     FOR p in (SELECT * FROM PRODUCTS) LOOP
         DBMS_OUTPUT.PUT_LINE('Product Name: ' || p.product_name || ' | Qauntity: ' || p.quantity || ' | Price: ' || p.Price);
     END LOOP;
-
+    DBMS_OUTPUT.PUT_LINE(' ');
 
 -- combine product and supplier info using two records
+    DBMS_OUTPUT.PUT_LINE('--- Combined Product + Supplier Info ---');
     DBMS_OUTPUT.PUT_LINE('Product ' || prod_rec.product_name || ' supplied by ' || sup_rec.SUPPLIER_NAME || ' | Qauntity: ' || prod_rec.quantity || '| Price: ' || prod_rec.price);
 
 END;
