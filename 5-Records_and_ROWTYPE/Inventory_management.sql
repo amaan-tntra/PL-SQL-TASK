@@ -20,3 +20,22 @@ INSERT ALL
   INTO Suppliers (supplier_id, supplier_name, contact) VALUES (9,  'Bright Tech Traders',          '9845612398')
   INTO Suppliers (supplier_id, supplier_name, contact) VALUES (10, 'Shree Infotech Supplies',      '9765432109')
 SELECT * FROM dual;
+
+
+
+DECLARE
+
+-- Declare record variable for Products
+    prod_rec PRODUCTS%ROWTYPE;
+    
+BEGIN
+
+-- Fetch and print details of a product with PRODUCT_ID = 1
+    SELECT * INTO prod_rec
+    FROM PRODUCTS
+    WHERE PRODUCT_ID = 1; 
+    
+    DBMS_OUTPUT.PUT_LINE('Product Name: ' || prod_rec.product_name || ' | Qauntity: ' || prod_rec.quantity ||
+                        ' | Price: ' || prod_rec.Price);
+END;
+/
