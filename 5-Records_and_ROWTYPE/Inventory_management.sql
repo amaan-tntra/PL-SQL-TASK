@@ -27,7 +27,10 @@ DECLARE
 
 -- Declare record variable for Products
     prod_rec PRODUCTS%ROWTYPE;
-    
+
+-- Declare record variable for Suppliers
+    sup_rec SUPPLIERS%ROWTYPE;
+ 
 BEGIN
 
 -- Fetch and print details of a product with PRODUCT_ID = 1
@@ -37,5 +40,16 @@ BEGIN
     
     DBMS_OUTPUT.PUT_LINE('Product Name: ' || prod_rec.product_name || ' | Qauntity: ' || prod_rec.quantity ||
                         ' | Price: ' || prod_rec.Price);
+
+
+-- Fetch and print details of supplier with SUPPLIER_ID = 1
+    SELECT * INTO sup_rec 
+    FROM SUPPLIERS
+    WHERE SUPPLIER_ID = 1;
+
+    DBMS_OUTPUT.PUT_LINE('Supplier Name: ' || sup_rec.SUPPLIER_NAME || ' | Contact: ' || sup_rec.Contact);
+
+
+
 END;
 /
