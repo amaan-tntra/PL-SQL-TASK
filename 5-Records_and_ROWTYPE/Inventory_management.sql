@@ -55,5 +55,9 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('Product Name: ' || p.product_name || ' | Qauntity: ' || p.quantity || ' | Price: ' || p.Price);
     END LOOP;
 
+
+-- combine product and supplier info using two records
+    DBMS_OUTPUT.PUT_LINE('Product ' || prod_rec.product_name || ' supplied by ' || sup_rec.SUPPLIER_NAME || ' | Qauntity: ' || prod_rec.quantity || '| Price: ' || prod_rec.price);
+
 END;
 /
