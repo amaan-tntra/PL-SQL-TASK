@@ -33,3 +33,7 @@
 ## 4. Collections in PL/SQL - Inventory Management System
 <img src="./images/4-Output.png" alt="Output Screenshot for Inventory Management System">
 
+
+## 5. Records and %ROWTYPE in PL/SQL - Inventory Management System
+<img src="./images/5-Output.png" alt="Output Screenshot for Inventory Management System">
+
